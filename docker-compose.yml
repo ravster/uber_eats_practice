@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:18.0-alpine
+    ports:
+      - "6002:5432"
+    environment:
+      POSTGRES_PASSWORD: localpass
+      POSTGRES_USER: ube
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  tt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "3002:3000"
+    links:
+      - db
+
+volumes:
+  db_data:

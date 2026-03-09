@@ -1,8 +1,8 @@
 # UberEats practice
 
-I've seen and used this app, and want to practice replicating it. I've also heard of Grab in SouthEastAsia and HungerStation and Foodora in the MiddleEast. Will use Golang and Postgres because that's my current preferred stack.
+I've used Grab in SouthEastAsia and heard of HungerStation and Foodora in the MiddleEast. Will use Golang and Postgres because that's my current preferred stack.
 
-I'm splitting the operations by writes and reads because I want to experiment with non REST APIs. I've done RoR and REST APIs for 13 years now and want to challenge myself with something new.
+I'm splitting the operations by writes and reads because I want to experiment with non-REST APIs. I've done RoR and REST APIs for 13 years now and want to challenge myself with something new.
 
 ## Writes
 Will probably put all of this in one endpoint, and then switch on opcodes or sth. If that pattern is good enough for low-level C programming, it's good enough for the web.

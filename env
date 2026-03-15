@@ -1,0 +1,5 @@
+# These are local, for a hobby project. Relax.
+PGHOST=db
+PGPORT=5432
+PGUSER=ube
+PGPASSWORD=localpass

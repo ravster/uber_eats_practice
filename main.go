@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"database/sql"
 	"net/http"
+	_ "github.com/lib/pq"
 )
 
 func restaurantNew(w http.ResponseWriter, r *http.Request) {
@@ -50,8 +52,39 @@ func writeOp(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
 }
 
+var db *sql.DB
+
+func initDBConn() {
+	log.Printf("Making DB conn")
+	pghost := os.Getenv("PGHOST")
+	pgport := os.Getenv("PGPORT")
+	pguser := os.Getenv("PGUSER")
+	pgpass := os.Getenv("PGPASSWORD")
+	pgdb := os.Getenv("PGDATABASE"
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		pghost, pgport, pguser, pgpass, pgdb)
+	log.Printf("psqlinfo is %s\n", psqlInfo)
+	var err error
+	db, err = sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Made DB conn")
+	row := db.QueryRow(`SELECT
+	id
+	from users
+		where email = $1
+	limit 1`, "ravi@ravidesai.com")
+	user := User{}
+	if err = row.Scan(&user.Id); err != nil {
+		log.Fatalf("Could not load User during startup. Got err=%s", err)
+	}
+	log.Printf("DB connection good. Found user with id = %d\n", user.Id)
+}
+
 func main() {
 	fmt.Println("Started program")
+	initDBConn()
 
 	http.HandleFunc("/writeOp", writeOp) // Handle all write operations
 	fmt.Println("Starting server at :3000")

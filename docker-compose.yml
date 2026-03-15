@@ -8,7 +8,9 @@ services:
       POSTGRES_USER: ube
     volumes:
       - db_data:/var/lib/postgresql/data
-  tt:
+  ube:
+    env_file:
+      - ./env
     build:
       context: .
       dockerfile: Dockerfile

@@ -60,7 +60,7 @@ func initDBConn() {
 	pgport := os.Getenv("PGPORT")
 	pguser := os.Getenv("PGUSER")
 	pgpass := os.Getenv("PGPASSWORD")
-	pgdb := os.Getenv("PGDATABASE"
+	pgdb := os.Getenv("PGDATABASE")
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		pghost, pgport, pguser, pgpass, pgdb)
 	log.Printf("psqlinfo is %s\n", psqlInfo)
@@ -72,14 +72,14 @@ func initDBConn() {
 	log.Printf("Made DB conn")
 	row := db.QueryRow(`SELECT
 	id
-	from users
-		where email = $1
-	limit 1`, "ravi@ravidesai.com")
-	user := User{}
-	if err = row.Scan(&user.Id); err != nil {
-		log.Fatalf("Could not load User during startup. Got err=%s", err)
+	from cuisines
+		where name = $1
+	limit 1`, "Thai")
+	id := 0
+	if err = row.Scan(&id); err != nil {
+		log.Fatalf("Could not load cuisine during startup. Got err=%s", err)
 	}
-	log.Printf("DB connection good. Found user with id = %d\n", user.Id)
+	log.Printf("DB connection good. Found Thai cuisine with id = %d\n", id)
 }
 
 func main() {
